@@ -94,8 +94,10 @@ namespace FileManager
         private static void LoadSettings()
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            pageSize = Convert.ToInt32(config.AppSettings.Settings["pageSize"].Value);
-
+            if (config.HasFile)
+            {
+                pageSize = Convert.ToInt32(config.AppSettings.Settings["pageSize"].Value);
+            }
             var roaming = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming);
             var fileMap = new ExeConfigurationFileMap() { ExeConfigFilename = roaming.FilePath };
             config = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
