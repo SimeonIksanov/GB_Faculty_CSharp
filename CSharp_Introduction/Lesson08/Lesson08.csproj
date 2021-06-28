@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Description>Создать консольное приложение, которое при старте выводит приветствие,
+записанное в настройках приложения (application-scope).
+Запросить у пользователя имя, возраст и род деятельности,
+ а затем сохранить данные в настройках. 
+При следующем запуске отобразить эти сведения.
+Задать приложению версию и описание.</Description>
+    <ReleaseVersion>1</ReleaseVersion>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Lesson08.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
