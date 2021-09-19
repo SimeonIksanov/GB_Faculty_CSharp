@@ -12,14 +12,14 @@ using Xunit;
 namespace MetricsAgentTests
 {
     public abstract class MetricControllerUnitTest<TMetric, TController>
-        where TMetric : BaseEntity,new()
+        where TMetric : BaseEntity, new()
         where TController : MetricsController<TMetric>
     {
         protected TController _controller;
         protected Mock<IDbRepository<TMetric>> _repositoryMock = new Mock<IDbRepository<TMetric>>();
         protected Mock<ILogger<TController>> _loggerMock = new Mock<ILogger<TController>>();
-        protected DateTime fromTime = DateTime.MinValue;
-        protected DateTime toTime = DateTime.MaxValue;
+        protected long fromTime = long.MinValue;
+        protected long toTime = long.MaxValue;
         protected IMapper _mapper;
         protected MetricControllerUnitTest()
         {
@@ -28,7 +28,7 @@ namespace MetricsAgentTests
 
             _mapper = mapperConfiguration.CreateMapper();
         }
-        
+
         [Fact]
         public void GetMetrics_returnsOk()
         {

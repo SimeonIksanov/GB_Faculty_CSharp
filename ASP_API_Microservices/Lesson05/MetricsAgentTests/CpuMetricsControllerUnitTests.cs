@@ -26,7 +26,7 @@ namespace MetricsAgentTests
         {
             var expected = Enumerable.Range(1, 1).Select(x => new CpuMetric
             {
-                Time = DateTime.Now,
+                Time = DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
                 Id = 1,
                 Value = 10
             }).AsQueryable();

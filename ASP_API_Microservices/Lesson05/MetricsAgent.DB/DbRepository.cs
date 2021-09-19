@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MetricsAgent.DB
 {
-    public class DbRepository<T> : IDbRepository<T> where T: BaseEntity
+    public class DbRepository<T> : IDbRepository<T> where T : BaseEntity
     {
         private readonly AppDbContext _context;
 
@@ -16,6 +17,13 @@ namespace MetricsAgent.DB
         {
             return _context.Set<T>().AsQueryable();
         }
+
+        //public List<T> GetAll(long fromSecond, long toSecond)
+        //{
+        //    return _context.Set<T>()
+        //                   .Where(item => item.Time > fromSecond && item.Time < toSecond)
+        //                   .ToList();
+        //}
 
         public async Task AddAsync(T item)
         {
