@@ -1,0 +1,35 @@
+@startuml
+participant ":Клиент" as Client
+participant ":Брокер" as Broker
+participant ":Фондовая биржа" as Moex
+database ":Депозитарий" as Depo
+
+title Диаграмма взаимодействия "Покупка акций"
+
+Client -> Broker : Заявка на покупку акций
+activate Broker
+
+  alt Достаточно денежных средств
+  Broker -> Moex : Исполнить заявку покупки акций
+  activate Moex
+
+    Moex -> Moex : покупка акций
+    Moex -> Depo : Внести изменения о приобретении акций
+    activate Depo
+
+      Depo -> Depo : регистрация
+
+      Moex <- Depo : изменения внесены
+    deactivate Depo
+
+    Broker <-- Moex : Заявка исполнена
+  deactivate Moex
+
+  Client <- Broker : Акции куплены
+  Client <- Broker : Отчет об исполнении заявки
+
+  else Недостаточно денежных средств
+  Client <- Broker : Недостаточно средств
+  end
+deactivate Broker
+@enduml

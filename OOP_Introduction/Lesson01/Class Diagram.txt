@@ -1,0 +1,61 @@
+@startuml
+Class Client {
+  Portfolio : Portfolio
+  Money : Decimal
+  Broker : Broker
+}
+abstract Security {
+  Ticker : String
+  Price : Decimal
+  Quantity : int
+}
+Class Share {
+  Dividends : int
+}
+
+Class Bond{
+  Coupon : int
+}
+
+Class Portfolio {
+  Shares : Share[]
+  Bonds : Bond[]
+  Decimal TotalGain()
+  Decimal TodaysGain()
+}
+
+class Order {
+  Security : Security
+  Action : string
+  Quantity : int
+  Price : Decimal
+}
+
+Class Broker {
+  Name: String
+  ReputationStars: int
+  void HandleOrder(Order order)
+  String MakeConsultation()
+}
+
+Class StockExchange{
+  void ProcessOrder(BrokerOrder order)
+}
+
+Class Depository {
+  void Register(somedata)
+}
+
+
+Security <|-- Share
+Security <|-- Bond
+
+Client o-- Portfolio
+Order o-- Security
+Portfolio o-- Share
+Portfolio o-- Bond
+Client o-- Broker
+
+Broker -- StockExchange
+StockExchange -- Depository
+@enduml

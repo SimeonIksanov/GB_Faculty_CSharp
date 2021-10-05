@@ -1,0 +1,22 @@
+@startuml
+left to right direction
+
+
+
+rectangle "Диаграмма вариантов использования"{
+  actor :Клиент:  
+
+  rectangle Брокер {
+    usecase UC11 as "Внести деньги"
+    usecase UC12 as "Подать заявку на вывод деньги"
+    usecase UC13 as "Подать заявку на покупку акций"
+    usecase UC14 as "Подать заявку на продажу акций"
+    usecase UC14 as "Получить консультацию"
+  }
+
+  Клиент--UC11
+  Клиент--UC12
+  Клиент--UC13
+  Клиент--UC14
+}
+@enduml
