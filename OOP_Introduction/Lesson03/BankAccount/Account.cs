@@ -59,7 +59,7 @@ namespace Lesson03
 
         public void Withdraw(decimal value)
         {
-            if (value > 0 && _balance >= value)
+            if (value > 0 && HasEnoughMoney(value))
             {
                 _balance -= value;
             }
