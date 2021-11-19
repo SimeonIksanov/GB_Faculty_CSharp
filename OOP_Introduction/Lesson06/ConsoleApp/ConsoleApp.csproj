@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BankAccountLib\BankAccountLib.csproj" />
     <ProjectReference Include="..\FiguresLib\FiguresLib.csproj" />
+    <ProjectReference Include="..\GameLib\GameLib.csproj" />
   </ItemGroup>
 
 </Project>

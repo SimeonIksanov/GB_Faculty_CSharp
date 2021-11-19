@@ -1,6 +1,9 @@
 ﻿using System;
 using FiguresLib;
 using BankAccountLib;
+using GameLib.Characters;
+using GameLib.Weapon;
+using GameLib.Observer;
 
 namespace Lesson03
 {
@@ -11,10 +14,13 @@ namespace Lesson03
             Console.WriteLine(" === TASK 01 OUTPUT ===");
             Task01();
 
+            Console.ReadLine();
+
             Console.WriteLine();
             Console.WriteLine(" === TASK 02 OUTPUT ===");
             Task02();
 
+            Console.ReadLine();
 
             Console.WriteLine();
             Console.WriteLine(" === TASK 03 OUTPUT ===");
@@ -44,8 +50,29 @@ namespace Lesson03
 
         static void Task02()
         {
-            Console.WriteLine("Lord of Rings.. coming soon");
-            //throw new NotImplementedException();
+            var observer = new Observer();
+
+            var Aragorn = new Human(observer);
+            var Ugluk = new Orc(observer);
+            var Galadriel = new Elf(observer);
+
+            var allHeroes = new BaseCharacter[] { Aragorn, Ugluk, Galadriel };
+
+            Ugluk.TakeWeapon(new Scimitar());
+
+            while(Aragorn.IsAlive && Ugluk.IsAlive)
+            {
+                Aragorn.Hit(Ugluk);
+                Ugluk.Hit(Aragorn);
+                Galadriel.Heal(Aragorn);
+                Galadriel.Hit(Ugluk);
+            }
+            
+            Console.WriteLine();
+            foreach (BaseCharacter hero in allHeroes)
+            {
+                Console.WriteLine($"Is {hero.GetType().Name} alive?: {hero.IsAlive}");
+            }
         }
         static void Task03()
         {
