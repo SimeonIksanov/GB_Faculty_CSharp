@@ -7,7 +7,7 @@ namespace BuldingApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Homework for lesson 05");
+            Console.WriteLine("Homework for lesson 04");
 
             Creator.CreateBuiling();
             Creator.CreateBuiling(5);
@@ -15,7 +15,7 @@ namespace BuldingApp
 
             Console.WriteLine($"Построено {Creator.AllBuildings.Count} дома");
 
-            foreach(var b in Creator.AllBuildings.Values)
+            foreach (var b in Creator.AllBuildings.Values)
             {
                 Console.WriteLine(b);
             }
