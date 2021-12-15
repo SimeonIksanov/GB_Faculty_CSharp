@@ -126,14 +126,22 @@ namespace FM.Core.Controllers
             _diskOperations.ChangeDirectory(_currentDirectory);
         }
 
-        private void ListContent(string path, int page=1)
+        private void ListContent(string path, int page = 1)
         {
+
             string fullPath = _diskOperations.GetFullPath(path);
             _viewData.Path = fullPath;
-            _viewData.DirectoryListing = _diskOperations.GetFolderContent(fullPath)
-                                                        .Skip(_pageSize*(page-1))
-                                                        .Take(_pageSize)
-                                                        .ToArray();
+            var content = _diskOperations.GetFolderContent(fullPath);
+
+            page = page < 1
+                ? 1
+                : page <= (content.Length / _pageSize) + 1
+                ? page
+                : (content.Length / _pageSize) + 1;
+
+            _viewData.DirectoryListing = content.Skip(_pageSize * (page - 1))
+                                                .Take(_pageSize)
+                                                .ToArray();
         }
     }
 }
