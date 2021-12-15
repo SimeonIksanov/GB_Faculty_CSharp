@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FM.Core.Models
+namespace EntityLib
 {
     public interface IViewData
     {
         public string Path { get; set; }
         public IFileSystemItem[] DirectoryListing { get; set; }
-        public IFileSystemItemInfo FileSystemItemInfo { get; set; }
+        public IFileSystemItemInfo? FileSystemItemInfo { get; set; }
         //public string InfoPanelPath { get; set; }
         //public DateTime InfoPanelCreationTime { get; set; }
         //public DateTime InfoPanelLastAccessTime { get; set; }

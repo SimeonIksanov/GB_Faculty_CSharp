@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FM.Core.Views
+namespace EntityLib
 {
     public interface IViewConsole : IView
     {

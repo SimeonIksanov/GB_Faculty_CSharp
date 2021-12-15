@@ -1,11 +1,10 @@
 ﻿using EntityLib;
 using FM.Core.Models;
 using FM.Core.Models.Commands;
-using FM.Core.Views;
 
 namespace FM.Core.Controllers
 {
-    public class Controller
+    public class Controller : IController
     {
         private string _currentDirectory;
         private int _pageSize;
@@ -13,16 +12,18 @@ namespace FM.Core.Controllers
         private IView _view { get; set; }
         private IViewData _viewData;
 
-        public Controller(IView view, IDiskOperations diskOperation, int pageSize)
+        public Controller(IView view, IDiskOperations diskOperation)
         {
             _view = view;
             _viewData = new ViewData();
             _diskOperations = diskOperation;
             _currentDirectory = _diskOperations.GetCurDir();
-            _pageSize = pageSize;
+            _pageSize = 15;
         }
+        
+        public int PageSize { get => _pageSize; set => _pageSize = value; }
 
-        public void Execute(UserCommand cmd)
+        public void Execute(UserCommand? cmd)
         {
             if (cmd is ExitCommand)
             {
@@ -90,7 +91,7 @@ namespace FM.Core.Controllers
 
         private void Find(string filter)
         {
-            _viewData.DirectoryListing = _diskOperations.Find(_currentDirectory,filter);
+            _viewData.DirectoryListing = _diskOperations.Find(_currentDirectory, filter);
         }
 
         private void Move(string path, string newName)

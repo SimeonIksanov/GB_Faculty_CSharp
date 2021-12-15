@@ -1,10 +1,8 @@
-﻿using System;
-using FM.Core.Models;
-using FM.Core.Views;
+﻿using EntityLib;
 
-namespace FM.App.Cmd
+namespace ConsoleUI
 {
-    internal class UI : IViewConsole
+    public class UI : IViewConsole
     {
         const int width = 130;
         const int pageSize = 15;

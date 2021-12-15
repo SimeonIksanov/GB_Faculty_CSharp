@@ -9,8 +9,8 @@ namespace FM.Core.Models
 {
     public class ViewData : IViewData
     {
-        public string Path { get; set; }
-        public IFileSystemItem[] DirectoryListing { get; set; }
-        public IFileSystemItemInfo FileSystemItemInfo { get; set; }
+        public string Path { get; set; } = String.Empty;
+        public IFileSystemItem[] DirectoryListing { get; set; } = new IFileSystemItem[0];
+        public IFileSystemItemInfo? FileSystemItemInfo { get; set; }
     }
 }

@@ -9,8 +9,8 @@ namespace FileSystemLib
 {
     public class FileSystemItem : IFileSystemItem
     {
-        public string Name { get; set; }
-        public string Path { get; set; }
+        public string Name { get; set; } = String.Empty;
+        public string Path { get; set; } = String.Empty;
         public FileSystemItemType Type { get; set; }
 
         public override string ToString()

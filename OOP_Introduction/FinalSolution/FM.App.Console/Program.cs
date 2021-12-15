@@ -1,7 +1,6 @@
-﻿using FileSystemLib;
-using FM.Core.Controllers;
-using FM.Core.Models;
+﻿using FM.Core.Controllers;
 using FM.Core.Models.Commands;
+using FM.DI;
 
 namespace FM.App.Cmd
 {
@@ -11,17 +10,11 @@ namespace FM.App.Cmd
         {
             SetConsoleWindowsSize();
 
-            IConfiguration config = new Configuration();
-
-            UserCommand userCommand;
-
-            var controller = new Controller(
-                view: new UI(),
-                diskOperation: new DiskOperations(),
-                pageSize: 15
-                );
+            UserCommand? userCommand;
+            Configuration _configuration = new Configuration();
+            IController controller = _configuration.Container.GetInstance<IController>();
             
-            controller.Execute(null);// Draw UI for first time
+            controller.Execute(new ListCommand(".", 1));// Draw UI for first time
             
             while (true)
             {
@@ -37,15 +30,15 @@ namespace FM.App.Cmd
                 Console.SetWindowSize(140, 35);
             }
         }
-        private static UserCommand ReadCommand()
+        private static UserCommand? ReadCommand()
         {
-            string input = String.Empty;
+            string? input = String.Empty;
 
             input = Console.ReadLine();
             var cmd = ParseCommand(input);
             return cmd;
         }
-        private static UserCommand ParseCommand(string input)
+        private static UserCommand? ParseCommand(string? input)
         {
             if (string.IsNullOrWhiteSpace(input)) return null;
 

@@ -9,7 +9,7 @@ namespace FileSystemLib
 {
     public class ItemInfo : IFileSystemItemInfo
     {
-        public string Path { get; set; }
+        public string? Path { get; set; }
         public ulong Size { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime LastAccessTime { get; set; }
