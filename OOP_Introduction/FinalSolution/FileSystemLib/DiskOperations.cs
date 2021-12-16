@@ -128,7 +128,6 @@ namespace FileSystemLib
             else if (File.Exists(path))
             {
                 FileInfo fi = new FileInfo(path);
-                //return (fi.CreationTime, fi.LastAccessTime, fi.LastWriteTime);
                 return new ItemInfo()
                 {
                     CreationTime = fi.CreationTime,

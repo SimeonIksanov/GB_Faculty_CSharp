@@ -6,8 +6,6 @@ namespace ConsoleUI
     {
         const int width = 130;
         const int pageSize = 15;
-
-        //IViewData _viewData;
         public void Display(IViewData viewData)
         {
             Console.Clear();

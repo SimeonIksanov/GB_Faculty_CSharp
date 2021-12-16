@@ -17,12 +17,11 @@ namespace FM.App.Cmd
 
             controller.AddLogger(_configuration.Container.GetInstance<ILogWriter>());
 
-            controller.Execute(new ListCommand(".", 1));// Draw UI for first time
-            
+            userCommand = new ListCommand(".", 1);
             while (true)
             {
-                userCommand = ReadCommand();
                 controller.Execute(userCommand);
+                userCommand = ReadCommand();
             }
         }
 
