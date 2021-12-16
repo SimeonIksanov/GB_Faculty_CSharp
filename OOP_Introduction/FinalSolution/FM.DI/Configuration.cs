@@ -21,6 +21,7 @@ namespace FM.DI
             Container.Register<IDiskOperations, DiskOperations>(Lifestyle.Singleton);
             Container.Register<IController, Controller>(Lifestyle.Singleton);
             Container.Register<IView, UI>(Lifestyle.Singleton);
+            Container.Register<ILogWriter, LogWriter>(Lifestyle.Singleton);
         }
     }
 }

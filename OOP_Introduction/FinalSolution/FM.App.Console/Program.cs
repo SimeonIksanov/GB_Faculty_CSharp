@@ -1,4 +1,5 @@
-﻿using FM.Core.Controllers;
+﻿using EntityLib;
+using FM.Core.Controllers;
 using FM.Core.Models.Commands;
 using FM.DI;
 
@@ -13,7 +14,9 @@ namespace FM.App.Cmd
             UserCommand? userCommand;
             Configuration _configuration = new Configuration();
             IController controller = _configuration.Container.GetInstance<IController>();
-            
+
+            controller.AddLogger(_configuration.Container.GetInstance<ILogWriter>());
+
             controller.Execute(new ListCommand(".", 1));// Draw UI for first time
             
             while (true)

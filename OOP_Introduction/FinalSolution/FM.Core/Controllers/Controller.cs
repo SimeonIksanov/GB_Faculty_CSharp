@@ -11,6 +11,7 @@ namespace FM.Core.Controllers
         private IDiskOperations _diskOperations;
         private IView _view { get; set; }
         private IViewData _viewData;
+        private ILogWriter? _logger;
 
         public Controller(IView view, IDiskOperations diskOperation)
         {
@@ -25,65 +26,83 @@ namespace FM.Core.Controllers
 
         public void Execute(UserCommand? cmd)
         {
-            if (cmd is ExitCommand)
+            try
             {
-                Environment.Exit(0);
+                if (cmd is ExitCommand)
+                {
+                    Environment.Exit(0);
+                }
+                else if (cmd is ListCommand listCommand)
+                {
+                    ListContent(listCommand.Path, listCommand.Page);
+                }
+                else if (cmd is CdCommand cdCommand)
+                {
+                    ChangeDirectory(cdCommand.Path);
+                    ListContent(_currentDirectory, 1);
+                }
+                else if (cmd is CopyCommand copyCommand)
+                {
+                    Copy(copyCommand.Source, copyCommand.Destination);
+                    ListContent(_currentDirectory, 1);
+                }
+                else if (cmd is DeleteCommand deleteCommand)
+                {
+                    _diskOperations.Delete(deleteCommand.Path);
+                    ListContent(_currentDirectory, 1);
+                }
+                else if (cmd is CreateDirectoryCommand createDirectoryCommand)
+                {
+                    CreateDirectory(createDirectoryCommand.Path);
+                    ListContent(_currentDirectory, 1);
+                }
+                else if (cmd is CreateFileCommand createFileCommand)
+                {
+                    CreateFile(createFileCommand.Path);
+                    ListContent(_currentDirectory, 1);
+                }
+                else if (cmd is InfoCommand infoCommand)
+                {
+                    var info = Info(infoCommand.Path);
+                    _viewData.FileSystemItemInfo = info;
+                }
+                else if (cmd is MoveCommand moveCommand)
+                {
+                    Move(moveCommand.Path, moveCommand.NewName);
+                    ListContent(_currentDirectory, 1);
+                }
+                else if (cmd is FindCommand findCommand)
+                {
+                    Find(findCommand.Filter);
+                }
+                else if (cmd is SetAttributeCommand setAttributeCommand)
+                {
+                    SetAttribute(setAttributeCommand.Path, setAttributeCommand.Attribute);
+                    Execute(new InfoCommand(setAttributeCommand.Path));
+                }
+                else
+                {
+                    ListContent(_currentDirectory);
+                }
             }
-            else if (cmd is ListCommand listCommand)
+            catch(Exception e)
             {
-                ListContent(listCommand.Path, listCommand.Page);
-            }
-            else if (cmd is CdCommand cdCommand)
-            {
-                ChangeDirectory(cdCommand.Path);
-                ListContent(_currentDirectory, 1);
-            }
-            else if (cmd is CopyCommand copyCommand)
-            {
-                Copy(copyCommand.Source, copyCommand.Destination);
-                ListContent(_currentDirectory, 1);
-            }
-            else if (cmd is DeleteCommand deleteCommand)
-            {
-                _diskOperations.Delete(deleteCommand.Path);
-                ListContent(_currentDirectory, 1);
-            }
-            else if (cmd is CreateDirectoryCommand createDirectoryCommand)
-            {
-                CreateDirectory(createDirectoryCommand.Path);
-                ListContent(_currentDirectory, 1);
-            }
-            else if (cmd is CreateFileCommand createFileCommand)
-            {
-                CreateFile(createFileCommand.Path);
-                ListContent(_currentDirectory, 1);
-            }
-            else if (cmd is InfoCommand infoCommand)
-            {
-                var info = Info(infoCommand.Path);
-                _viewData.FileSystemItemInfo = info;
-            }
-            else if (cmd is MoveCommand moveCommand)
-            {
-                Move(moveCommand.Path, moveCommand.NewName);
-                ListContent(_currentDirectory, 1);
-            }
-            else if (cmd is FindCommand findCommand)
-            {
-                Find(findCommand.Filter);
-            }
-            else if (cmd is SetAttributeCommand setAttributeCommand)
-            {
-                SetAttribute(setAttributeCommand.Path, setAttributeCommand.Attribute);
-                Execute(new InfoCommand(setAttributeCommand.Path));
-            }
-            else
-            {
-                ListContent(_currentDirectory);
+                try
+                {
+                    _logger?.Log(e.Message);
+                }
+                catch (Exception)
+                {
+                    //
+                }
             }
             _view.Display(_viewData);
         }
 
+        public void AddLogger(ILogWriter logger)
+        {
+            _logger = logger;
+        }
         private void SetAttribute(string path, int attribute)
         {
             _diskOperations.SetAttribute(path, (FileAttributes)attribute);
@@ -128,10 +147,9 @@ namespace FM.Core.Controllers
 
         private void ListContent(string path, int page = 1)
         {
-
             string fullPath = _diskOperations.GetFullPath(path);
-            _viewData.Path = fullPath;
             var content = _diskOperations.GetFolderContent(fullPath);
+            _viewData.Path = fullPath;
 
             page = page < 1
                 ? 1
