@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <title>Homework 01</title>
+    </head>
+    <body>
+        <script>
+            'use strict'
+            function Sum(a, b) {
+                return a + b;
+            }
+
+            function Difference(a, b) {
+                return a - b;
+            }
+
+            function Multiply(a, b) {
+                return a * b;
+            }
+
+            function Division(a, b) {
+                if (b == 0) {throw new Error("Denomenator cannot be zero")}
+                return a / b;
+            }
+            
+            /**
+             * @description Calculate
+             * @param {number} arg1
+             * @param {number} arg2
+             * @param {string} operation - sum, dif, mul or div
+             * @returns {number}
+             */
+            function mathOperation(arg1, arg2, operation) {
+                switch (operation.toLowerCase()) {
+                    case "sum":
+                        return Sum(arg1,arg2);
+                    case "dif":
+                        return Difference(arg1,arg2);
+                    case "mul":
+                        return Multiply(arg1,arg2);
+                    case "div":
+                        return Division(arg1,arg2);
+                    default:
+                        throw new Error("unknown operation")
+                }
+            }
+
+            console.log(mathOperation(3,7,'sum'));
+            console.log(mathOperation(3,7,'dif'));
+        </script>
+    </body>
+</html>
