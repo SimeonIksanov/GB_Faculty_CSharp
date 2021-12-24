@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <title>Homework 01</title>
+</head>
+
+<body>
+    <script>
+        'use strict'
+        const products = [
+            {
+                id: 3,
+                price: 200,
+            },
+            {
+                id: 4,
+                price: 900,
+            },
+            {
+                id: 1,
+                price: 1000,
+            },
+        ];
+
+        let discount = 0.15;
+        let productsWithDiscount = []
+
+        // forEach
+        products.forEach( x => 
+        {
+            productsWithDiscount.push(
+                {
+                    id : x.id,
+                    price: x.price * (1-discount)
+                }
+            )
+        });
+
+        // Map
+        // productsWithDiscount = products.map( e => 
+        // {
+        //     return {
+        //         id : e.id,
+        //         price : e.price * (1-discount)
+        //     }
+        // })
+
+        console.log(productsWithDiscount);
+    </script>
+</body>
+
+</html>
