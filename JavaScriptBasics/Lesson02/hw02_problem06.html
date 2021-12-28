@@ -12,7 +12,7 @@
         function ReadNumber() {
             while (true) {
                 let input = prompt("Введите число:")
-                if (input == null) {continue}
+                if (input == null || input === "") {continue}
 
                 let num = Number(input);
                 if (!isNaN(num)) { return num }
