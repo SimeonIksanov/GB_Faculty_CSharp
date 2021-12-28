@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>javascript cource</title>
+</head>
+
+<body>
+    <script>
+        'use strict'
+        /* *** ES 5 *** */
+        function ProductES5(name, price) {
+            this.Name = name,
+                this.Price = price
+        }
+
+        ProductES5.prototype.make25PercentDiscount = function () {
+            this.Price = this.Price * (1 - 0.25);
+        }
+
+        let productES5 = new ProductES5('p1', 100);
+        productES5.make25PercentDiscount();
+        alert(productES5.Price);
+
+
+        /* *** ES 5 *** */
+        class ProductES6 {
+            constructor(name, price) {
+                this.Name = name,
+                    this.Price = price
+            }
+
+            make25PercentDiscount() {
+                this.Price = this.Price * (1 - 0.25);
+            }
+        }
+        let productES6 = new ProductES6('p1', 1000);
+        productES6.make25PercentDiscount();
+        alert(productES6.Price);
+    </script>
+</body>
+
+</html>

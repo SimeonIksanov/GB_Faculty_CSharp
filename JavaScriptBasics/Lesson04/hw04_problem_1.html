@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <title>javascript cource</title>
+</head>
+
+<body>
+    <script>
+        'use strict'
+
+        function MyNumber(num) {
+            this.hundreds = Math.floor(num / 100);
+            this.tens = Math.floor(num / 10) % 10;
+            this.units = num % 10;
+        }
+
+        function IsCorrectNumber(n)
+        {
+            return !isNaN(n) && n >= 0 && n <= 999 && Number.isInteger(n);
+        }
+
+        function ReadUserInput()
+        {
+            let input = prompt("enter a number from range 0..999");
+            if (input === null || input === '')
+            {
+                return NaN
+            }
+            return Number(input)
+        }
+
+        function ConvertToNumber(n)
+        {
+            return Number(n);
+        }
+
+        let num = ConvertToNumber( ReadUserInput() );
+        if (IsCorrectNumber(num))
+        {
+            console.log(new MyNumber(num));
+        }
+        else
+        {
+            console.log({});
+        }
+    </script>
+</body>
+
+</html>
