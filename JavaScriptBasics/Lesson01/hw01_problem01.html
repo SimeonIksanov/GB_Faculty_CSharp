@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Homework 01</title>
+    </head>
+    <body>
+        <script>
+            'use strict'
+
+            function ConvertToCelsius(tempInFahrenheit)
+            {
+                return (tempInFahrenheit - 32)*5/9;
+            }
+
+            function ConvertToFahrenheit(tempInCelsius)
+            {
+                return 9/5*tempInCelsius + 32;
+            }
+
+            let tempInCelsius = 0;
+            alert(`${tempInCelsius}°C = ${ConvertToFahrenheit(tempInCelsius)}°F`);
+            tempInCelsius = 35;
+            alert(`${tempInCelsius}°C = ${ConvertToFahrenheit(tempInCelsius)}°F`);
+            tempInCelsius = 100;
+            alert(`${tempInCelsius}°C = ${ConvertToFahrenheit(tempInCelsius)}°F`);
+
+            let tempInFahrenheit = 0;
+            alert(`${tempInFahrenheit}°F = ${ConvertToCelsius(tempInFahrenheit)}°C`);
+            tempInFahrenheit = 95;
+            alert(`${tempInFahrenheit}°F = ${ConvertToCelsius(tempInFahrenheit)}°C`);
+            tempInFahrenheit = 200;
+            alert(`${tempInFahrenheit}°F = ${ConvertToCelsius(tempInFahrenheit)}°C`);
+        </script>
+    </body>
+</html>
