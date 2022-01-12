@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Homework 01</title>
+    </head>
+    <body>
+        <script>
+            'use strict'
+            
+            function Sum(a, b) {
+                return a + b;
+            }
+
+            function Difference(a, b) {
+                return a - b;
+            }
+
+            function Multiply(a, b) {
+                return a * b;
+            }
+
+            function Division(a, b) {
+                if (b == 0) {throw new Error("Denomenator cannot be zero")}
+                return a / b;
+            }
+
+            console.log(`5 + 7 = ${Sum(5,7)}`);
+            console.log(`5 - 7 = ${Difference(5,7)}`);
+            console.log(`5 * 7 = ${Multiply(5,7)}`);
+            console.log(`5 / 7 = ${Division(5,7)}`);
+        </script>
+    </body>
+</html>

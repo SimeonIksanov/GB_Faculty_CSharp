@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>Homework 01</title>
+</head>
+<body>
+    <script>
+        'use strict'
+        /**
+         * Reads string from user and converts it to number
+         * @returns {number} - Return number from user input
+         */
+        function ReadNumber() {
+            while (true) {
+                let input = prompt("Введите число:")
+                if (input == null || input === "") {continue}
+
+                let num = Number(input);
+                if (!isNaN(num)) { return num }
+            }
+
+        }
+        /**
+         * @param {number} num
+         * @returns {string}
+         */
+        function PrintString(num) {
+            let lastDigit = num % 10;
+            let preLastDigit = Math.trunc(num/10) % 10;
+            let resultString = `Ваша сумма в ${num} `
+
+            if (preLastDigit == 1){
+                resultString += "рублей"
+            } else {
+                if (lastDigit == 1) {
+                    resultString += "рубль"
+                }
+                else if (2 <= lastDigit && lastDigit <= 4) {
+                    resultString += "рубля"
+                }
+                else {
+                    resultString += "рублей"
+                }
+            }
+
+            resultString += " успешно зачислена.";
+            return resultString;
+        }
+
+        console.log(PrintString(ReadNumber()));
+    </script>
+</body>
+
+</html>
