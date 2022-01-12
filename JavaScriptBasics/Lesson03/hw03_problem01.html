@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <title>Homework 01</title>
+</head>
+
+<body>
+    <script>
+        'use strict'
+
+        function IsEven(n) {
+            //return n % 2 == 0;
+            return (n & 1) == 0;
+        }
+
+        for (let i = 0; i < 11; i++) {
+            if (i === 0) { console.log("0 - это ноль") }
+            else if (IsEven(i)) { console.log(`${i} - это четное`) }
+            else { console.log(`${i} - это нечетное`) }
+        }
+    </script>
+</body>
+
+</html>
