@@ -1,0 +1,11 @@
+ls c:\ [-p 2] // содержимое папки + опциональная пагинация
+cd c:\temp    // перейти в каталог
+exit // выход
+copy src dst // копировать файлы и папки
+delete path // удалить файл или папку
+mkdir dirPath // создать папку
+touch filepath // создать файл
+info filepath // инфо о файле или папке
+rename/move src dst // перемещение(переименование) файла или папки
+find filter // поиск по фильтру (*.txt)
+setattr filepath int // изменить аттрибуты файла
