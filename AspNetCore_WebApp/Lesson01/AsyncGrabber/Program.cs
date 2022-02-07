@@ -14,12 +14,12 @@ namespace Test
         static async Task Main(string[] args)
         {
             var saver = new DataSaver();
-            var grabber = new Grabber();
             var idToDownload = Enumerable.Range(4, 10).ToArray();
+            using (var grabber = new Grabber())
 
-            await saver.SaveToFileAsync(
-                "result.txt",
-                await grabber.DownloadAsync(idToDownload));
+                await saver.SaveToFileAsync(
+                    "result.txt",
+                    await grabber.DownloadAsync(idToDownload));
         }
     }
 }
