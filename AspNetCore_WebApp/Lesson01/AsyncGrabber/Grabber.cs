@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Test
@@ -18,13 +19,13 @@ namespace Test
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<Post>> DownloadAsync(int[] ids)
+        public async Task<IEnumerable<Post>> DownloadAsync(int[] ids, CancellationToken token)
         {
             Task<HttpResponseMessage>[] tasks = new Task<HttpResponseMessage>[ids.Length];
 
             for (int i = 0; i < ids.Length; i++)
             {
-                tasks[i] = _httpClient.GetAsync($"https://jsonplaceholder.typicode.com/posts/{ids[i]}");
+                tasks[i] = _httpClient.GetAsync($"https://jsonplaceholder.typicode.com/posts/{ids[i]}", token);
             }
 
             var results = await Task.WhenAll(tasks);

@@ -19,7 +19,7 @@ namespace Test
 
                 await saver.SaveToFileAsync(
                     "result.txt",
-                    await grabber.DownloadAsync(idToDownload));
+                    await grabber.DownloadAsync(idToDownload, cts.Token));
         }
     }
 }
