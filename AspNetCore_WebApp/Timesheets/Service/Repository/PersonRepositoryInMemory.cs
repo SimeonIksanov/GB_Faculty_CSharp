@@ -29,13 +29,17 @@ namespace Service.Repository
         {
             foreach (var person in persons)
             {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
                 person.Id = _lastId++;
                 await Task.Run(() => _storage.Add(person));
             }
         }
 
 
-        public async Task<Person> GetPersonById(int id, CancellationToken token)
+        public async Task<Person> GetPersonByIdAsync(int id, CancellationToken token)
         {
             return await Task.Run(() => _storage.Where(p => p.Id == id).DefaultIfEmpty(new Person()).First(), token);
         }
@@ -58,7 +62,7 @@ namespace Service.Repository
         }
 
 
-        public async Task UpdatePerson(Person person, CancellationToken token)
+        public async Task UpdatePersonAsync(Person person, CancellationToken token)
         {
             await Task.Run(() =>
             {
@@ -73,7 +77,7 @@ namespace Service.Repository
             }, token);
         }
 
-        public async Task DeletePerson(int id, CancellationToken token)
+        public async Task DeletePersonAsync(int id, CancellationToken token)
         {
             await Task.Run(() => _storage.Remove(_storage.First(p => p.Id == id)), token);
         }

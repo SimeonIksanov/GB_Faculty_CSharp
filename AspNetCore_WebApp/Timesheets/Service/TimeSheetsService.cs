@@ -24,7 +24,7 @@ namespace Service
 
         public async Task<Person> GetPersonByIdAsync(int id, CancellationToken token)
         {
-            return await _personRepository.GetPersonById(id, token);
+            return await _personRepository.GetPersonByIdAsync(id, token);
         }
 
         public async Task<IEnumerable<Person>> GetPersonByNameAsync(string name, PersonParameters personParameters, CancellationToken token)
@@ -45,27 +45,25 @@ namespace Service
         }
 
 
-        public async Task<bool> UpdatePersonAsync(Person person, CancellationToken token)
+        public async Task UpdatePersonAsync(Person person, CancellationToken token)
         {
-            Person p = await _personRepository.GetPersonById(person.Id, token);
+            Person p = await _personRepository.GetPersonByIdAsync(person.Id, token);
             if (p.IsEmptyObject())
             {
-                return false;
+                return;
             }
-            await _personRepository.UpdatePerson(person, token);
-            return true;
+            await _personRepository.UpdatePersonAsync(person, token);
         }
 
 
-        public async Task<bool> DeletePerson(int id, CancellationToken token)
+        public async Task DeletePersonAsync(int id, CancellationToken token)
         {
             Person p = await GetPersonByIdAsync(id, token);
             if (p.IsEmptyObject())
             {
-                return false;
+                return;
             }
-            await _personRepository.DeletePerson(id, token);
-            return true;
+            await _personRepository.DeletePersonAsync(id, token);
         }
 
 

@@ -126,7 +126,7 @@ namespace ServiceTests
             };
             _newPerson = await _service.AddPersonAsync(_newPerson, _cts.Token);
 
-            await _service.DeletePerson(_newPerson.Id, _cts.Token);
+            await _service.DeletePersonAsync(_newPerson.Id, _cts.Token);
 
             var deletedPerson = await _service.GetPersonByIdAsync(_newPerson.Id, _cts.Token);
 

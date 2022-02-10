@@ -12,14 +12,14 @@ namespace Service.Repository
 
         Task AddPersonRangeAsync(IEnumerable<Person> person, CancellationToken token);
 
-        Task<Person> GetPersonById(int id, CancellationToken token);
+        Task<Person> GetPersonByIdAsync(int id, CancellationToken token);
 
         Task<IEnumerable<Person>> GetPersonByNameAsync(string name, PersonParameters personParameters, CancellationToken token);
 
         Task<IEnumerable<Person>> GetPersonsAsync(PersonParameters personParameters, CancellationToken token);
 
-        Task UpdatePerson(Person person, CancellationToken token);
+        Task UpdatePersonAsync(Person person, CancellationToken token);
 
-        Task DeletePerson(int id, CancellationToken token);
+        Task DeletePersonAsync(int id, CancellationToken token);
     }
 }
