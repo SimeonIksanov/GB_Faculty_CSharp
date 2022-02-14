@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Service;
 using Service.Repository;
+using Infrastructure.Extensions;
 
 namespace WebAPI
 {
@@ -36,6 +37,8 @@ namespace WebAPI
 
             services.AddSingleton<IPersonRepository, PersonRepositoryInMemory>();
             services.AddSingleton<TimeSheetsService>();
+
+            services.ConfigureDbContext(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
