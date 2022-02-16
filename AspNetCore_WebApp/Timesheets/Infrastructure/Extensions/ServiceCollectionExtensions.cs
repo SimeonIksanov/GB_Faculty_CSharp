@@ -1,5 +1,7 @@
 ﻿using System;
 using Data.EF;
+using Data.Implementation;
+using Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,12 @@ namespace Infrastructure.Extensions
             services.AddDbContext<TimesheetDbContext>(
                 options => options.UseSqlite(connectionString),
                 ServiceLifetime.Scoped);
+        }
+
+        public static void AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
     }
 }
