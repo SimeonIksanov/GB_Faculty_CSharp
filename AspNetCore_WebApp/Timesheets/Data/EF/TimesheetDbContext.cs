@@ -8,7 +8,7 @@ namespace Data.EF
     {
         public TimesheetDbContext(DbContextOptions options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public DbSet<User> Users { get; set; }

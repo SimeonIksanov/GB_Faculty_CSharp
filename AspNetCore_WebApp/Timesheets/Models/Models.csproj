@@ -5,11 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Dto\" />
     <None Remove="Entities\" />
+    <None Remove="Auth\" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\" />
     <Folder Include="Entities\" />
+    <Folder Include="Auth\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.15.1" />
   </ItemGroup>
 </Project>

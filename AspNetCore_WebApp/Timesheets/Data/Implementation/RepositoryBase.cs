@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Data.EF;
@@ -12,7 +13,7 @@ namespace Data.Implementation
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : Entity, new()
     {
-        private TimesheetDbContext _context;
+        protected TimesheetDbContext _context;
 
         public RepositoryBase(TimesheetDbContext context)
         {
@@ -33,6 +34,11 @@ namespace Data.Implementation
                             .DefaultIfEmpty(new T())
                             .FirstAsync(token);
         }
+
+        //public IQueryable<T> Find(Expression<Func<T, bool>> expression, CancellationToken cancellationToken)
+        //{
+        //    return _context.Set<T>().Where(expression);
+        //}
 
         public async Task<IEnumerable<T>> GetAll(CancellationToken token)
         {

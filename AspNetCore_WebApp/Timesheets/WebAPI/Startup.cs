@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Domain.Managers.Implementation;
+using Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 using Service;
 using Service.Repository;
-using Infrastructure.Extensions;
+using WebAPI.Extensions;
 
 namespace WebAPI
 {
@@ -29,10 +23,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
-            });
+            services.ConfigureSwagger();
+
             services.AddControllers();
 
             services.AddSingleton<IPersonRepository, PersonRepositoryInMemory>();
@@ -40,6 +32,11 @@ namespace WebAPI
 
             services.ConfigureDbContext(Configuration);
             services.AddRepositories();
+
+            services.ConfigureAuthentication(Configuration);
+
+            services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<ILoginManager, LoginManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +53,14 @@ namespace WebAPI
 
             app.UseRouting();
 
+            app.UseCors(x => x
+                .SetIsOriginAllowed(origin => true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
