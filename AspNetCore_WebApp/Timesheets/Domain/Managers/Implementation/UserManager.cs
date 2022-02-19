@@ -14,39 +14,46 @@ namespace Domain.Managers.Implementation
 {
     public class UserManager : IUserManager
     {
-        public async Task CreateUser(IUserRepository userRepository, CreateUserRequest createUserRequest, CancellationToken cancellationToken)
+        private IPasswordManager _passwordManager;
+        private IUserRepository _userRepository;
+
+        public UserManager(IPasswordManager passwordManager, IUserRepository userRepository)
         {
-            var salt = PasswordManager.CreateSalt();
+            _passwordManager = passwordManager;
+            _userRepository = userRepository;
+        }
+
+        public async Task CreateUser(CreateUserRequest createUserRequest, CancellationToken cancellationToken)
+        {
+            var salt = _passwordManager.CreateSalt();
             User newUser = new User
             {
                 Username = createUserRequest.Username,
                 Salt = salt,
-                PasswordHash = PasswordManager.GetPasswordHashed(createUserRequest.Password, salt)
+                PasswordHash = _passwordManager.GetPasswordHashed(createUserRequest.Password, salt)
             };
-            await userRepository.Add(newUser);
+            await _userRepository.Add(newUser);
         }
 
-        public async Task<User> FindUserByToken(IUserRepository repository, string token, CancellationToken cancellationToken)
+        public async Task<User> FindUserByToken(string token, CancellationToken cancellationToken)
         {
-            return await repository.GetByRefreshToken(token, cancellationToken);
+            return await _userRepository.GetByRefreshToken(token, cancellationToken);
         }
 
-        public async Task<User> GetUser(IUserRepository repository, LoginRequest request, CancellationToken cancellationToken)
+        public async Task<User> GetUser(LoginRequest request, CancellationToken cancellationToken)
         {
-            User user = await repository.GetByUsername(request.Login, cancellationToken);
+            User user = await _userRepository.GetByUsername(request.Login, cancellationToken);
             if (user.IsEmptyObject())
             {
                 return new User();
             }
-            byte[] passHash = PasswordManager.GetPasswordHashed(request.Password, user.Salt);
+            byte[] passHash = _passwordManager.GetPasswordHashed(request.Password, user.Salt);
 
             if (!user.PasswordHash.SequenceEqual(passHash))
             {
                 return new User();
             }
             return user;
-
-            //return await Task.Run(() => new User() { Username = "IvanPetrov", Role = "someRole" });
         }
     }
 }

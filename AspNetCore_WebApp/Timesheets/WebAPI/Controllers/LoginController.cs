@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
                 Login = request.Login,
                 Password = request.Password
             };
-            var user = await _userManager.GetUser(userRepository, loginRequest, cancellationToken);
+            var user = await _userManager.GetUser(loginRequest, cancellationToken);
             if (user.IsEmptyObject())
             {
                 return Unauthorized();
@@ -82,7 +82,7 @@ namespace WebAPI.Controllers
                 Username = createUserRequestDto.Username,
                 Password = createUserRequestDto.Password
             };
-            await _userManager.CreateUser(userRepository, createUserRequest, cancellationToken);
+            await _userManager.CreateUser(createUserRequest, cancellationToken);
             return Ok();
         }
 

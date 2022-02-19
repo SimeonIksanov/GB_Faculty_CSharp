@@ -48,7 +48,7 @@ namespace Domain.Managers.Implementation
             string token,
             CancellationToken cancellationToken)
         {
-            var user = await userManager.FindUserByToken(userRepository, token, cancellationToken);
+            var user = await userManager.FindUserByToken(token, cancellationToken);
             if (user.IsEmptyObject())
             {
                 return new LoginResponse();

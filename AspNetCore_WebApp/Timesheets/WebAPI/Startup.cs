@@ -37,6 +37,7 @@ namespace WebAPI
 
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<ILoginManager, LoginManager>();
+            services.AddScoped<IPasswordManager, PasswordManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

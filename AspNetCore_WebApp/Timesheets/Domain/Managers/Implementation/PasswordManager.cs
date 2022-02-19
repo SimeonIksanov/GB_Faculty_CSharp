@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Security.Cryptography;
+using Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace Domain
+namespace Domain.Managers.Implementation
 {
-    public class PasswordManager
+    public class PasswordManager : IPasswordManager
     {
-        internal static byte[] GetPasswordHashed(string password, byte[] salt)
+        public byte[] GetPasswordHashed(string password, byte[] salt)
         {
             if (string.IsNullOrWhiteSpace(password) || salt is null)
             {
@@ -22,7 +23,7 @@ namespace Domain
             return hashed;
         }
 
-        internal static byte[] CreateSalt()
+        public byte[] CreateSalt()
         {
             byte[] salt = new byte[128 / 8];
             using (var rngCsp = new RNGCryptoServiceProvider())
