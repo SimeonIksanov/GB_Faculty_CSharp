@@ -4,6 +4,8 @@ using Data.EF;
 using Data.Implementation;
 using Data.Interfaces;
 using Domain;
+using Domain.Managers.Implementation;
+using Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Models.Auth
+namespace Domain.Managers.Interfaces
 {
     public interface ITokenService
     {

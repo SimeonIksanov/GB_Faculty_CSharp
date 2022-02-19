@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Domain.Managers.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Models.Auth;
 
-namespace Domain
+namespace Domain.Managers.Implementation
 {
     public class TokenService : ITokenService
     {
