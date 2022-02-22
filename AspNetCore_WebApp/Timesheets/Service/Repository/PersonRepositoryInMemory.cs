@@ -79,7 +79,11 @@ namespace Service.Repository
 
         public async Task DeletePersonAsync(int id, CancellationToken token)
         {
-            await Task.Run(() => _storage.Remove(_storage.First(p => p.Id == id)), token);
+            var personToDelete = _storage.First(p => p.Id == id);
+            if (personToDelete != null)
+            {
+                await Task.Run(() => _storage.Remove(personToDelete), token);
+            }
         }
     }
 }
