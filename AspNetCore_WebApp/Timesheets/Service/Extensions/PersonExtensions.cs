@@ -9,10 +9,5 @@ namespace Service.Extensions
         {
             return person.Id.Equals(-1);
         }
-
-        public static bool IsObjectNull(this Person person)
-        {
-            return person == null;
-        }
     }
 }

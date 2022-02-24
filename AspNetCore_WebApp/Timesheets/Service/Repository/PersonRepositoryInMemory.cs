@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Service.Extensions;
 using Service.Models;
 
 namespace Service.Repository
@@ -41,7 +42,13 @@ namespace Service.Repository
 
         public async Task<Person> GetPersonByIdAsync(int id, CancellationToken token)
         {
-            return await Task.Run(() => _storage.Where(p => p.Id == id).DefaultIfEmpty(new Person()).First(), token);
+            //return await Task.Run(() => _storage.Where(p => p.Id == id).DefaultIfEmpty(new Person()).First(), token);
+            var person = await Task.Run(() => _storage.SingleOrDefault(p => p.Id == id));
+            if (person == null)
+            {
+                return new Person();
+            }
+            return person;
         }
 
         public async Task<IEnumerable<Person>> GetPersonByNameAsync(string name, PersonParameters personParameters, CancellationToken token)
@@ -66,14 +73,16 @@ namespace Service.Repository
         {
             await Task.Run(() =>
             {
-                var personInRepo = _storage.First(p => p.Id == person.Id);
-
-                // специально не использую Automapper
-                personInRepo.FirstName = person.FirstName;
-                personInRepo.LastName = person.LastName;
-                personInRepo.Company = person.Company;
-                personInRepo.Age = person.Age;
-                personInRepo.Email = person.Email;
+                var personInRepo = _storage.FirstOrDefault(p => p.Id == person.Id);
+                if (personInRepo != null)
+                {
+                    // специально не использую Automapper
+                    personInRepo.FirstName = person.FirstName;
+                    personInRepo.LastName = person.LastName;
+                    personInRepo.Company = person.Company;
+                    personInRepo.Age = person.Age;
+                    personInRepo.Email = person.Email;
+                }
             }, token);
         }
 
