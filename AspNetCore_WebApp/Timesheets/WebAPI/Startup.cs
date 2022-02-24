@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Service;
+using Service.Repository;
+using Infrastructure.Extensions;
 
 namespace WebAPI
 {
@@ -31,6 +34,12 @@ namespace WebAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
             });
             services.AddControllers();
+
+            services.AddSingleton<IPersonRepository, PersonRepositoryInMemory>();
+            services.AddSingleton<TimeSheetsService>();
+
+            services.ConfigureDbContext(Configuration);
+            services.AddRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
