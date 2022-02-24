@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPersonById([FromRoute] int id, CancellationToken token)
+        public async Task<ActionResult<Person>> GetPersonById([FromRoute] int id, CancellationToken token)
         {
             var person = await _service.GetPersonByIdAsync(id, token);
             if (person.IsEmptyObject())
@@ -37,40 +37,42 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> GetPersonByName([FromQuery] string name, [FromQuery] PersonParameters personParameters, CancellationToken token)
+        public async Task<ActionResult<IEnumerable<Person>>> GetPersonByName([FromQuery] string name, [FromQuery] PersonParameters personParameters, CancellationToken token)
         {
             IEnumerable<Person> persons = await _service.GetPersonByNameAsync(name, personParameters, token);
             return Ok(persons);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPersons([FromQuery] PersonParameters personParameters, CancellationToken token)
+        public async Task<ActionResult<IEnumerable<Person>>> GetPersons([FromQuery] PersonParameters personParameters, CancellationToken token)
         {
             IEnumerable<Person> persons = await _service.GetPersonsAsync(personParameters, token);
             return Ok(persons);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePerson([FromBody] CreateUpdatePersonRequest request, CancellationToken token)
+        public async Task<ActionResult<Person>> CreatePerson([FromBody] CreatePersonRequest request, CancellationToken token)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var newPerson = new Person().Map(request);
+            var newPerson = new Person();
+            Mapper.CreateRequestToPerson(request, newPerson);
             newPerson = await _service.AddPersonAsync(newPerson, token);
             return Ok(newPerson);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePerson([FromBody] CreateUpdatePersonRequest request, CancellationToken token)
+        public async Task<IActionResult> UpdatePerson([FromBody] UpdatePersonRequest request, CancellationToken token)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-            var updatedPerson = new Person().Map(request);
+            var updatedPerson = new Person();
+            Mapper.UpdateRequestToPerson(request, updatedPerson);
             await _service.UpdatePersonAsync(updatedPerson, token);
             return Ok();
         }
@@ -78,10 +80,6 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePerson([FromRoute] int id, CancellationToken token)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             await _service.DeletePersonAsync(id, token);
             return Ok();
         }

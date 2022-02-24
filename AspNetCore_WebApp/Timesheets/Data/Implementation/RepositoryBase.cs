@@ -47,6 +47,11 @@ namespace Data.Implementation
 
         public async Task Delete(T item)
         {
+            var dbItem = _context.Set<T>().Find(item.Id);
+            if (dbItem == null)
+            {
+                return;
+            };
             _context.Set<T>().Remove(item);
             await _context.SaveChangesAsync();
         }

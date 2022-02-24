@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebAPI.Models
 {
-    public class CreateUpdatePersonRequest
+    public class CreatePersonRequest
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(16, ErrorMessage = "no more then 16 caracters")]
         public string FirstName { get; set; }
