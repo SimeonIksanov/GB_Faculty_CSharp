@@ -12,6 +12,7 @@
     <None Remove="EF\" />
     <None Remove="Interfaces\" />
     <None Remove="Implementation\" />
+    <None Remove="EF\Configurations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.14" />
@@ -20,5 +21,6 @@
     <Folder Include="EF\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Implementation\" />
+    <Folder Include="EF\Configurations\" />
   </ItemGroup>
 </Project>

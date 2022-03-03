@@ -1,4 +1,5 @@
-﻿using Domain.Managers.Implementation;
+﻿using Domain.Aggregates;
+using Domain.Managers.Implementation;
 using Domain.Managers.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +39,7 @@ namespace WebAPI
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<ILoginManager, LoginManager>();
             services.AddScoped<IPasswordManager, PasswordManager>();
+            services.AddScoped<IInvoiceManager, InvoiceManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
