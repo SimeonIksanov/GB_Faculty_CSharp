@@ -13,7 +13,7 @@ namespace MyThreadPoolLib
 
         private int _maxCapasity = 10;
 
-        private int _minCapasity = 5;
+        private int _minCapasity = 2;
 
         private Thread _taskScheduler = null;
 
@@ -42,40 +42,46 @@ namespace MyThreadPoolLib
         {
             for (int i = 0; i < _minCapasity; i++)
             {
-                var mtpi = new MyThreadPoolItem { State = TaskState.NotStarted };
-                mtpi.TaskItem = new TaskQueueItem { task = () => { } };
-                mtpi.Thread = new Thread(() =>
-                {
-                    do
-                    {
-                        bool Enter = false;
-
-                        if (mtpi.State == TaskState.NotStarted)
-                        {
-                            mtpi.State = TaskState.Processing;
-                            Enter = true;
-                        }
-
-                        if (Enter)
-                        {
-                            try
-                            {
-                                mtpi.TaskItem.task.Invoke();
-                                mtpi.State = TaskState.Completed;
-                            }
-                            catch (Exception ex)
-                            {
-
-                            }
-                        }
-
-                        Thread.Sleep(MIN_SLEEP);
-                    } while (true);
-                });
-                mtpi.Thread.IsBackground = true;
-                _threads.Add(mtpi);
-                mtpi.Thread.Start();
+                AddTaskToPool();
             }
+        }
+
+        private MyThreadPoolItem AddTaskToPool()
+        {
+            var mtpi = new MyThreadPoolItem { State = TaskState.NotStarted };
+            mtpi.TaskItem = new TaskQueueItem { task = () => { } };
+            mtpi.Thread = new Thread(() =>
+            {
+                do
+                {
+                    bool Enter = false;
+
+                    if (mtpi.State == TaskState.NotStarted)
+                    {
+                        mtpi.State = TaskState.Processing;
+                        Enter = true;
+                    }
+
+                    if (Enter)
+                    {
+                        try
+                        {
+                            mtpi.TaskItem.task.Invoke();
+                            mtpi.State = TaskState.Completed;
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+
+                    Thread.Sleep(MIN_SLEEP);
+                } while (true);
+            });
+            mtpi.Thread.IsBackground = true;
+            _threads.Add(mtpi);
+            mtpi.Thread.Start();
+            return mtpi;
         }
 
         private void TaskSchedulerJob()
@@ -85,6 +91,7 @@ namespace MyThreadPoolLib
                 var queueCount = _userTaskQueue.Count;
                 if (_userTaskQueue.TryPeek(out TaskQueueItem topQueueItem))
                 {
+                    bool isAdded = false;
                     foreach (MyThreadPoolItem poolItem in _threads)
                     {
                         if (poolItem.State == TaskState.Completed)
@@ -92,8 +99,16 @@ namespace MyThreadPoolLib
                             poolItem.TaskItem = topQueueItem;
                             poolItem.State = TaskState.NotStarted;
                             _userTaskQueue.TryDequeue(out _); // единственный инстанс разбирает свою очередь..
+                            isAdded = true;
                             break;
                         }
+                    }
+                    if (isAdded == false && _threads.Count < _maxCapasity)
+                    {
+                        var newThread = AddTaskToPool();
+                        newThread.TaskItem = topQueueItem;
+                        newThread.State = TaskState.NotStarted;
+                        _userTaskQueue.TryDequeue(out _);
                     }
                 }
                 Thread.Sleep(MIN_SLEEP);
