@@ -9,4 +9,10 @@
     <ProjectReference Include="..\ScannerEmulator\ScannerEmulator.csproj" />
     <ProjectReference Include="..\ScanApp\ScanApp.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Autofac.Extensions.DependencyInjection" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+  </ItemGroup>
 </Project>

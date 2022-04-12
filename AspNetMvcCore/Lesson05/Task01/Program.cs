@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+using Autofac;
 using ScanApp;
 using ScannerEmulator;
 
@@ -10,13 +9,41 @@ namespace Task01
     {
         static void Main(string[] args)
         {
-            IScannerEmulator scanner = new Scanner();
+            var builder = new ContainerBuilder();
+
+            builder
+                .RegisterType<PerfData>()
+                .As<IPerfData>();
+
+            builder
+                .RegisterType<Scanner>()
+                .As<IScannerEmulator>();
+
+            builder
+                .Register(c => new SaveToTextFile(string.Format("{0}.txt", DateTime.UtcNow.ToString("yyyy-MM-ddTHH-mm-ssZ"))))
+                .As<ISaveStrategy>();
+
+            builder
+                .Register(c => new SaveToBin(string.Format("{0}.bin", DateTime.UtcNow.ToString("yyyy-MM-ddTHH-mm-ssZ"))))
+                .As<ISaveStrategy>();
+
+            builder
+                .RegisterType<PerfSaver>()
+                .As<IPerfSaver>();
+
+            builder.RegisterComposite<CompositeSaver, ISaveStrategy>();
+
+            var container = builder.Build();
+
+
+            IScannerEmulator scanner = container.Resolve<IScannerEmulator>();
+            var compositeSaver = container.Resolve<ISaveStrategy>();
+
             var app = new ScanApplication(scanner);
 
-            app.ScanToFile(new SaveToTextFile("SavedScan.txt"));
-            //app.ScanToFile(new SaveToBin("SavedScan.bin"));
+            app.ScanToFile(compositeSaver);
 
-            app.SavePerfDate(new PerfSaver());
+            app.SavePerfDate(container.Resolve<IPerfSaver>());
         }
     }
 }
