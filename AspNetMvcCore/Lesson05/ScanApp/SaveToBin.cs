@@ -22,8 +22,6 @@ namespace ScanApp
             {
                 bw.Write(buffer, 0, count);
             }
-
-            stream.Dispose();
         }
     }
 }

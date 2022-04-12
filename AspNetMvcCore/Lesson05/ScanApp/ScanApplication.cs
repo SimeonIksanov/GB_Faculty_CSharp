@@ -15,7 +15,10 @@ namespace ScanApp
 
         public void ScanToFile(ISaveStrategy saveStrategy)
         {
-            saveStrategy.Save(_scanner.Scan());
+            using (var stream = _scanner.Scan())
+            {
+                saveStrategy.Save(stream);
+            }
         }
 
         public void SavePerfDate(IPerfSaver perfSaver)

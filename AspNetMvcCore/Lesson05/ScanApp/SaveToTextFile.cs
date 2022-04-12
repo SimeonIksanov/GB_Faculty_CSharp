@@ -20,7 +20,6 @@ namespace ScanApp
                 stream.CopyTo(ms);
                 allText = Encoding.UTF8.GetString(ms.ToArray());
             }
-            stream.Dispose();
 
             File.WriteAllText(_filePath, allText);
         }
