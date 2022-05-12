@@ -1,0 +1,30 @@
+﻿@using Domain.Entities
+@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h3>Registered Users</h3>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(User user in Model)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.Email</td>
+            <td><a asp-action="Delete" asp-route-id="@user.Id">Delete</a></td>
+        </tr>  
+    }
+    </tbody>
+</table>
+<a asp-action="Create">Create one</a>
