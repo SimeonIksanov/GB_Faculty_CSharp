@@ -1,0 +1,62 @@
+﻿@model WebApp.ViewModels.PortfolioViewModel
+
+@{
+    ViewData["Title"] = "Portfolio"+@Model.Account;
+}
+
+<h1>@Model.Account</h1>
+
+<div>
+    <h4>Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PortfolioId)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PortfolioId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Account)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Account)
+        </dd>
+        <dt class = "col-sm-2">
+            TotalGain
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Stocks.Sum(x=>x.TotalGain)
+        </dd>
+    </dl>
+</div>
+<div>
+@if (@Model.Stocks.Count>0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Ticker</th>
+                <th>Quantity</th>
+                <th>PurchasePrice</th>
+                <th>LastPrice</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var stock in Model.Stocks)
+        {
+            <tr>
+                <td>@stock.Ticker</td>
+                <td>@stock.Quantity</td>
+                <td>@stock.PurchasePrice</td>
+                <td>@stock.LastPrice</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+</div>
+<div>
+    @*@Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |*@
+    <a asp-action="Index">Back to List</a>
+</div>

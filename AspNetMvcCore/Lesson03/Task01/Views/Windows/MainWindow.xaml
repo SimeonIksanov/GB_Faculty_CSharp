@@ -1,0 +1,30 @@
+﻿<Window x:Class="Task01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Task01.ViewModels"
+        xmlns:local="clr-namespace:Task01"
+        mc:Ignorable="d"
+        Title="{Binding Title}"
+        Height="220" Width="180"
+        ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel >
+            <TextBox Margin="10,5" Text="{Binding Operand1}"/>
+            <ComboBox
+                Margin="10,5" 
+                ItemsSource="{Binding OperatorsComboboxItems}"
+                SelectedValue="Name"
+                DisplayMemberPath="Name"
+                SelectedItem="{Binding Operation}"></ComboBox>
+            <TextBox Margin="10,5" Text="{Binding Operand2}"/>
+            <Button Name="CalculateButton" Content="Calculate" Margin="10,5" Command="{Binding CalcCommand}"/>
+            <Label Content="Result" Margin="10,0"/>
+            <TextBlock Name="resultTextBlock" Text="{Binding Result}" Margin="10,0" TextWrapping="Wrap"/>
+        </StackPanel>
+    </Grid>
+</Window>

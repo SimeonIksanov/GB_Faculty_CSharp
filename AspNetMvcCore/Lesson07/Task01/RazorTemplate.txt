@@ -1,0 +1,13 @@
+﻿<html>
+<head>
+    <title>LLC @Model.CompanyName</title>
+    <body>
+        <p>Employee at @Model.CompanyName</p>
+        <ul>
+            @foreach(var e in Model.Employees)
+            {
+                <li>@e.Name @e.Lastname (Grade: @e.Grade)</li>
+            }
+        </ul>
+    </body>
+</html>
