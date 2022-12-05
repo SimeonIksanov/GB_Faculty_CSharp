@@ -1,4 +1,5 @@
 ﻿using System;
+using Data.EF.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Models.Entities;
 
@@ -13,6 +14,8 @@ namespace Data.EF
 
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Sheet> Sheets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,6 +25,8 @@ namespace Data.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
         }
     }
 }

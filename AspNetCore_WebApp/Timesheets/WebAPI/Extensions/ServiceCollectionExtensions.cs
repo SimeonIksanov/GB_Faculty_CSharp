@@ -30,6 +30,8 @@ namespace WebAPI.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<ISheetRepository, SheetRepository>();
         }
 
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
